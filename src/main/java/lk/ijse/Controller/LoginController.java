@@ -17,6 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import lk.ijse.DTO.UserDto;
 import lk.ijse.Model.UserModel;
 
@@ -31,10 +32,8 @@ public class LoginController {
     private Label lbl_username;
     @FXML
     private AnchorPane root;
-
     @FXML
     private JFXTextField txtPw;
-
     @FXML
     private JFXTextField txtUser;
     static String user;
@@ -47,19 +46,19 @@ public class LoginController {
         var dto = new UserDto(user,pw);
         List<UserDto>userDtoList = userModel.loginUser(dto);
         for (UserDto userDto:userDtoList) {
-            if (userDto.getUser().equals(user)) {
-                if (userDto.getPw().equals(pw)) {
+            if (!userDto.getUser().equals(user)) {
+                lbl_username.setText("Invalid username ! ");
+            }
+            else if (!userDto.getPw().equals(pw)) {
+                    lbl_Pw.setText("Invalid Password !");
+            }
+            else {
                     Parent rootNode = FXMLLoader.load(getClass().getResource("/view/chatRoom.fxml"));
                     Scene scene = new Scene(rootNode);
-                    Stage primaryStage = (Stage) root.getScene().getWindow();
-                    primaryStage.setScene(scene);
-                    primaryStage.centerOnScreen();
-                    primaryStage.setTitle("Chat Room");
-                } else {
-                    lbl_Pw.setText("Invalid Password !");
-                }
-            } else {
-                lbl_username.setText("Invalid username ! ");
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.centerOnScreen();
+                    stage.setTitle("Chat Room");
             }
         }
     }

@@ -13,7 +13,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.DTO.UserDto;
 import lk.ijse.Model.UserModel;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -26,7 +25,6 @@ public class RegisterController {
 
     @FXML
     private JFXTextField txtUser;
-
     UserModel userModel = new UserModel();
     public void btnSignupOnAction(ActionEvent actionEvent) throws IOException, SQLException {
         String user = txtUser.getText();
@@ -44,7 +42,6 @@ public class RegisterController {
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }
     }
-
     public void HyperLoginOnAction(ActionEvent actionEvent) throws IOException {
         root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/login.fxml")));
     }
