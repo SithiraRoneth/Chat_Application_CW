@@ -9,7 +9,6 @@ import lk.ijse.Server.Server;
 
 public class LauncherWrapper {
     public static void main(String[] args) {
-        // Run server class main
         Thread serverThread = new Thread(() -> {
             try {
                 Server.main(new String[]{});
@@ -18,7 +17,6 @@ public class LauncherWrapper {
             }
         });
         serverThread.start();
-        // Run Launcher main
         Launcher.main(args);
     }
 }
