@@ -5,19 +5,27 @@
  * */
 package lk.ijse.Controller;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Optional;
 
 public class ChatController {
     @FXML
     private Label lblName;
     @FXML
     private AnchorPane root;
+    @FXML
+    private AnchorPane MsgPane;
+    @FXML
+    private ScrollPane scrollPane;
     Socket socket;
     BufferedReader bufferedReader;
     PrintWriter printWriter;
@@ -37,4 +45,18 @@ public class ChatController {
             e.printStackTrace();
         }
     }
+
+    public void btnCloseOnAction(ActionEvent actionEvent) {
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Are you sure you want to exit ?", yes, no);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == yes) {
+            Platform.exit();
+        }
+    }
+
 }
