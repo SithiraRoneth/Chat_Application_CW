@@ -16,7 +16,7 @@ public class Server {
         Socket socket;
 
         while (true){
-            System.out.println("server waiting");
+            System.out.println("Server Started");
             socket = serverSocket.accept();
             System.out.println("Client connected");
         }

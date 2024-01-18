@@ -5,6 +5,7 @@
  * */
 package lk.ijse.Controller;
 
+import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,8 @@ import java.util.Optional;
 
 public class ChatController {
     @FXML
+    private JFXTextField txtFiled;
+    @FXML
     private Label lblName;
     @FXML
     private AnchorPane root;
@@ -31,8 +34,7 @@ public class ChatController {
     PrintWriter printWriter;
 
     public void initialize(){
-        String name = String.valueOf(LoginController.user);
-        lblName.setText(name);
+        lblName.setText(LoginController.user);
 
         try {
             socket = new Socket("localhost",3000);
@@ -50,7 +52,7 @@ public class ChatController {
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Are you sure you want to exit ?", yes, no);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit ?", yes, no);
 
         Optional<ButtonType> result = alert.showAndWait();
 
@@ -59,4 +61,10 @@ public class ChatController {
         }
     }
 
+    public void btnSendOnAction(MouseEvent mouseEvent) {
+    }
+
+
+    public void btnCameraOnAction(MouseEvent mouseEvent) {
+    }
 }

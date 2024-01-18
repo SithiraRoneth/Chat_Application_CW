@@ -20,7 +20,9 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import lk.ijse.DTO.UserDto;
 import lk.ijse.Model.UserModel;
+import lk.ijse.Server.Server;
 
+import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -47,10 +49,10 @@ public class LoginController {
         List<UserDto>userDtoList = userModel.loginUser(dto);
         for (UserDto userDto:userDtoList) {
             if (!userDto.getUser().equals(user)) {
-                lbl_username.setText("Invalid username ");
+                lbl_username.setText("Invalid username");
             }
             else if (!userDto.getPw().equals(pw)) {
-                    lbl_Pw.setText("Invalid Password ");
+                    lbl_Pw.setText("Invalid Password");
             }
             else {
                     Parent rootNode = FXMLLoader.load(getClass().getResource("/view/chatRoom.fxml"));
