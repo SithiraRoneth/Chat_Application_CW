@@ -41,6 +41,7 @@ public class LoginController {
     static String user;
     UserModel userModel = new UserModel();
 
+
     public void initialize(){
         root.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -63,10 +64,10 @@ public class LoginController {
         List<UserDto>userDtoList = userModel.loginUser(dto);
         for (UserDto userDto:userDtoList) {
             if (!userDto.getUser().equals(user)) {
-                lbl_username.setText("Invalid username");
+                lbl_username.setText("Invalid username \uD83D\uDEC8");
             }
             else if (!userDto.getPw().equals(pw)) {
-                    lbl_Pw.setText("Invalid Password");
+                    lbl_Pw.setText("Invalid Password \uD83D\uDEC8");
             }
             else {
                     Parent rootNode = FXMLLoader.load(getClass().getResource("/view/chatRoom.fxml"));
