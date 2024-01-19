@@ -41,6 +41,20 @@ public class LoginController {
     static String user;
     UserModel userModel = new UserModel();
 
+    public void initialize(){
+        root.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                try {
+                    btnLoginOnAction(new ActionEvent());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
     public void btnLoginOnAction(ActionEvent actionEvent) throws SQLException, IOException {
         user = txtUser.getText();
         String pw = txtPw.getText();

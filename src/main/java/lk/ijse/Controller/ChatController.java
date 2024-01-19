@@ -10,7 +10,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import java.io.*;
 import java.net.Socket;
@@ -67,7 +66,6 @@ public class ChatController extends Thread{
     public void btnSendOnAction(ActionEvent actionEvent) throws IOException {
         System.out.println("send");
     }
-
     public void btnCameraOnAction(ActionEvent actionEvent) {
         System.out.println("camera");
     }
