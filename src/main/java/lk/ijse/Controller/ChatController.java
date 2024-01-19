@@ -12,13 +12,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Optional;
 
-public class ChatController {
+
+public class ChatController extends Thread{
     @FXML
     private JFXTextField txtFiled;
     @FXML
@@ -41,6 +41,9 @@ public class ChatController {
             System.out.println("Socket connected to server");
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             printWriter = new PrintWriter(socket.getOutputStream(),true);
+
+            this.start();
+
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -61,10 +64,11 @@ public class ChatController {
         }
     }
 
-    public void btnSendOnAction(MouseEvent mouseEvent) {
+    public void btnSendOnAction(ActionEvent actionEvent) throws IOException {
+        System.out.println("send");
     }
 
-
-    public void btnCameraOnAction(MouseEvent mouseEvent) {
+    public void btnCameraOnAction(ActionEvent actionEvent) {
+        System.out.println("camera");
     }
 }
