@@ -5,35 +5,38 @@
  * */
 package lk.ijse.Controller;
 
-import com.jfoenix.controls.JFXTextField;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Optional;
 
 
 public class ChatController extends Thread{
     @FXML
-    private JFXTextField txtFiled;
+    private AnchorPane emojiPane;
+
     @FXML
     private Label lblName;
+
     @FXML
-    private AnchorPane root;
-    @FXML
-    private AnchorPane MsgPane;
+    private VBox msgVbox;
+
     @FXML
     private ScrollPane scrollPane;
+
+    @FXML
+    private TextField txtMsg;
     Socket socket;
     BufferedReader bufferedReader;
     PrintWriter printWriter;
 
     public void initialize(){
-        lblName.setText(LoginController.user);
+        String name = LoginController.user;
+        lblName.setText(name);
 
         try {
             socket = new Socket("localhost",3000);
@@ -42,31 +45,92 @@ public class ChatController extends Thread{
             printWriter = new PrintWriter(socket.getOutputStream(),true);
 
             this.start();
-
+            emojiPane.setVisible(false);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    @FXML
+    void hide_emoji_pane(MouseEvent event) {
+        emojiPane.setVisible(false);
+    }
+    @FXML
+    void emoji_on_action(MouseEvent event) {
+        emojiPane.setVisible(true);
+    }
 
-    public void btnCloseOnAction(ActionEvent actionEvent) {
-        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+    @FXML
+    void image_on_action(MouseEvent event) {
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit ?", yes, no);
+    }
 
-        Optional<ButtonType> result = alert.showAndWait();
+    @FXML
+    void send_on_action(MouseEvent event) {
+        String message = txtMsg.getText();
+        printWriter.println(lblName.getText() + ":" + message);
+        txtMsg.clear();
 
-        if (result.isPresent() && result.get() == yes) {
-            Platform.exit();
+        if ((message.equalsIgnoreCase("exit")) || (message.equalsIgnoreCase("bye"))){
+            System.exit(0);
         }
     }
 
-    public void btnSendOnAction(ActionEvent actionEvent) throws IOException {
-        System.out.println("send");
+    @FXML
+    void emoji1(MouseEvent mouseEvent) {
+
     }
-    public void btnCameraOnAction(ActionEvent actionEvent) {
-        System.out.println("camera");
+    @FXML
+    void emoji10(MouseEvent event) {
+    }
+    @FXML
+    void emoji11(MouseEvent event) {
+
+    }
+
+    @FXML
+    void emoji12(MouseEvent event) {
+
+    }
+
+    @FXML
+    void emoji2(MouseEvent event) {
+
+    }
+
+    @FXML
+    void emoji3(MouseEvent event) {
+
+    }
+
+    @FXML
+    void emoji4(MouseEvent event) {
+
+    }
+
+    @FXML
+    void emoji5(MouseEvent event) {
+
+    }
+
+    @FXML
+    void emoji6(MouseEvent event) {
+
+    }
+
+    @FXML
+    void emoji7(MouseEvent event) {
+
+    }
+
+    @FXML
+    void emoji8(MouseEvent event) {
+
+    }
+
+    @FXML
+    void emoji9(MouseEvent event) {
+
     }
 }

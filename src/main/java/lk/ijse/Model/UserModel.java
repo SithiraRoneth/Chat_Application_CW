@@ -27,23 +27,20 @@ public class UserModel {
         return pstm.executeUpdate()>0;
     }
 
-    public List<UserDto> loginUser(UserDto dto) throws SQLException {
+    public boolean loginUser(UserDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
-        String sql = "SELECT * FROM user ";
+        String sql = "SELECT * FROM user WHERE user_name = ? ";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
+        preparedStatement.setString(1,dto.getUser());
         ResultSet resultSet = preparedStatement.executeQuery();
-        List<UserDto> userDtoList = new ArrayList<>();
         while (resultSet.next()) {
-            userDtoList.add(
-                    new UserDto(
-                            resultSet.getString(1),
-                            resultSet.getString(2)
-                    )
-            );
+            String pw = resultSet.getString(2);
+            if (pw.equals(dto.getPw())){
+                return true;
+            }
         }
 
-        return userDtoList;
+        return false;
     }
 }
