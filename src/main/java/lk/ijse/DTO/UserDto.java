@@ -6,7 +6,6 @@
 package lk.ijse.DTO;
 
 import lombok.*;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

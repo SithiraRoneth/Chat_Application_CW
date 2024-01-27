@@ -11,8 +11,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="753.0" style="-fx-background-color: #74470f;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.ChatController">
+<AnchorPane fx:id="rootNode" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="753.0" style="-fx-background-color: #74470f;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.ChatController">
    <children>
       <ScrollPane fx:id="scrollPane" layoutX="17.0" layoutY="65.0" prefHeight="386.0" prefWidth="733.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <content>
@@ -21,7 +22,16 @@
       </ScrollPane>
       <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="46.0" prefWidth="727.0" style="-fx-background-color: #dcdcdc;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Label fx:id="lblName" layoutX="14.0" layoutY="15.0" />
+            <ImageView fitHeight="52.0" fitWidth="84.0" layoutX="14.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/profile.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblName" layoutX="76.0" layoutY="19.0">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f4f4f4" height="63.0" layoutX="11.0" layoutY="452.0" stroke="BLACK" strokeType="INSIDE" width="733.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="9.0" />
       <TextField fx:id="txtMsg" layoutX="74.0" layoutY="470.0" prefHeight="26.0" prefWidth="446.0" promptText="text" />

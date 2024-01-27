@@ -7,14 +7,10 @@ package lk.ijse.Model;
 
 import lk.ijse.DB.DbConnection;
 import lk.ijse.DTO.UserDto;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserModel {
 
     public boolean registerUser(UserDto dto) throws SQLException {

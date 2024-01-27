@@ -5,11 +5,16 @@
  * */
 package lk.ijse.Controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -17,25 +22,26 @@ import java.net.UnknownHostException;
 
 public class ChatController extends Thread{
     @FXML
+    private AnchorPane rootNode;
+    @FXML
     private AnchorPane emojiPane;
-
     @FXML
     private Label lblName;
-
     @FXML
     private VBox msgVbox;
-
     @FXML
     private ScrollPane scrollPane;
-
     @FXML
     private TextField txtMsg;
+    FileChooser fileChooser;
     Socket socket;
     BufferedReader bufferedReader;
     PrintWriter printWriter;
+    File filepath;
+    String name = LoginController.user;
 
     public void initialize(){
-        String name = LoginController.user;
+
         lblName.setText(name);
 
         try {
@@ -45,13 +51,17 @@ public class ChatController extends Thread{
             printWriter = new PrintWriter(socket.getOutputStream(),true);
 
             this.start();
+
             emojiPane.setVisible(false);
+
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
     @FXML
     void hide_emoji_pane(MouseEvent event) {
         emojiPane.setVisible(false);
@@ -63,23 +73,52 @@ public class ChatController extends Thread{
 
     @FXML
     void image_on_action(MouseEvent event) {
-
+        Stage stage =(Stage) ((Node) event.getSource()).getScene().getWindow();
+        fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Image");
+        this.filepath = fileChooser.showOpenDialog(stage);
+        //printWriter.println(lblName.getText()+" :" + filepath.getPath());
     }
 
     @FXML
     void send_on_action(MouseEvent event) {
-        String message = txtMsg.getText();
-        printWriter.println(lblName.getText() + ":" + message);
-        txtMsg.clear();
+       sendMessage();
+    }
 
-        if ((message.equalsIgnoreCase("exit")) || (message.equalsIgnoreCase("bye"))){
-            System.exit(0);
+    private void sendMessage() {
+        String msg = txtMsg.getText();
+        if (msg != null){
+            if(msg.equalsIgnoreCase("bye") || (msg.equalsIgnoreCase("exit"))) {
+                System.exit(0);
+            }
+            appendText(msg);
+            txtMsg.setText(null);
         }
     }
+    public void writeMessage(String message) {
+        HBox hBox = new HBox();
+        hBox.setStyle("-fx-alignment: center-left;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 520;-fx-max-width: 520;-fx-padding: 10");
+        Label messageLbl = new Label(message);
+        messageLbl.setStyle("-fx-background-color:   #696969;-fx-background-radius:15;-fx-font-size: 16;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
+        hBox.getChildren().add(messageLbl);
+        Platform.runLater(() -> msgVbox.getChildren().add(hBox));
+
+    }
+
+    private void appendText(String msg) {
+        HBox hBox = new HBox();
+        hBox.setStyle("-fx-alignment: center-right; -fx-fill-height: true; -fx-min-height: 50; -fx-pref-width: 520; -fx-max-width: 520; -fx-padding: 10");
+
+        Label messageLbl = new Label(msg);
+        messageLbl.setStyle("-fx-background-color: #A52A2A; -fx-background-radius: 15; -fx-font-size: 16; -fx-font-weight: normal; -fx-text-fill: white; -fx-wrap-text: true; -fx-alignment: center-left; -fx-content-display: left; -fx-padding: 10; -fx-max-width: 350;");
+
+        hBox.getChildren().add(messageLbl);
+        msgVbox.getChildren().add(hBox);
+    }
+
 
     @FXML
     void emoji1(MouseEvent mouseEvent) {
-
     }
     @FXML
     void emoji10(MouseEvent event) {

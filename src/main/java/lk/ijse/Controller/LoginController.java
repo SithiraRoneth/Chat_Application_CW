@@ -9,22 +9,16 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import lk.ijse.DTO.UserDto;
 import lk.ijse.Model.UserModel;
-import lk.ijse.Server.Server;
-
-import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 public class LoginController {
     @FXML
@@ -37,7 +31,6 @@ public class LoginController {
     private JFXTextField txtUser;
     static String user;
     UserModel userModel = new UserModel();
-
 
     public void initialize(){
         root.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -62,12 +55,19 @@ public class LoginController {
             Stage stage = new Stage();
             stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/chatRoom.fxml"))));
             stage.centerOnScreen();
-            stage.setTitle("Chat Room");
+            stage.setTitle(user+" Room");
             stage.show();
         }else {
-                lbl_Pw.setText("Invalid Username or Password \uD83D\uDEC8");
+            lbl_Pw.setText("Invalid Username or Password \uD83D\uDEC8");
         }
+        clearFields();
     }
+
+    private void clearFields() {
+        txtUser.setText("");
+        txtPw.setText("");
+    }
+
     public void btnSignupOnAction(ActionEvent actionEvent) throws IOException {
         root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/register.fxml")));
     }
