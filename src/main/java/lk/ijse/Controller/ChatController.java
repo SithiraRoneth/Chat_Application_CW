@@ -19,7 +19,6 @@ import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-
 public class ChatController extends Thread{
     @FXML
     private AnchorPane rootNode;
