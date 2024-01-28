@@ -77,7 +77,7 @@ public class ChatController extends Thread{
         fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Image");
         this.filepath = fileChooser.showOpenDialog(stage);
-        //printWriter.println(lblName.getText()+" :" + filepath.getPath());
+        printWriter.println(this.filepath.getPath());
     }
 
     @FXML
