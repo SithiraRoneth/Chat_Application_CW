@@ -94,6 +94,7 @@ public class ChatController extends Thread{
             appendText(msg);
             txtMsg.setText(null);
         }
+
     }
     public void writeMessage(String message) {
         HBox hBox = new HBox();
