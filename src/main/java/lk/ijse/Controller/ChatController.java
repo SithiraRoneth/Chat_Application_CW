@@ -107,13 +107,14 @@ public class ChatController extends Thread{
 
     private void appendText(String msg) {
         HBox hBox = new HBox();
-        hBox.setStyle("-fx-alignment: center-right; -fx-fill-height: true; -fx-min-height: 50; -fx-pref-width: 520; -fx-max-width: 520; -fx-padding: 10");
+        hBox.setStyle("-fx-alignment: center-right; -fx-fill-height: true; -fx-min-height: 50; -fx-pref-width: 46; -fx-max-width: 728; -fx-padding: 10");
 
         Label messageLbl = new Label(msg);
         messageLbl.setStyle("-fx-background-color: #A52A2A; -fx-background-radius: 15; -fx-font-size: 16; -fx-font-weight: normal; -fx-text-fill: white; -fx-wrap-text: true; -fx-alignment: center-left; -fx-content-display: left; -fx-padding: 10; -fx-max-width: 350;");
 
         hBox.getChildren().add(messageLbl);
         msgVbox.getChildren().add(hBox);
+
     }
 
 
