@@ -51,8 +51,4 @@ public class LoginController implements Initializable {
         txtUser.setText("");
     }
 
-    public void btnBackOnAction(MouseEvent mouseEvent) throws IOException {
-        root.getChildren().clear();
-        root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/welcomePage.fxml")));
-    }
 }
