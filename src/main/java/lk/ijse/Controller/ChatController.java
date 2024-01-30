@@ -8,12 +8,8 @@ package lk.ijse.Controller;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -68,7 +64,7 @@ public class ChatController implements Initializable {
         emojiPane.setVisible(false);
         int buttonIndex = 0;
         for (int row = 0; row < 4; row++) {
-            for (int column = 0; column < 4; column++) {
+            for (int column = 0; column < 3; column++) {
                 if (buttonIndex < emoji.length) {
                     String emojies = emoji[buttonIndex];
                     JFXButton emojiButton = createEmojiButton(emojies);
