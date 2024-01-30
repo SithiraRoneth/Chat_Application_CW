@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.Server.Client.Client;
 
@@ -22,19 +24,15 @@ import java.util.regex.Pattern;
 
 public class LoginController implements Initializable {
     @FXML
-    private Label lbl_Pw;
-    @FXML
     private AnchorPane root;
     @FXML
-    private JFXTextField txtPw;
-    @FXML
-    private JFXTextField txtUser;
+    private TextField txtUser;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
-    public void btnLoginOnAction(ActionEvent actionEvent) throws SQLException, IOException {
+    public void btnSigninOnAction(ActionEvent actionEvent) throws SQLException, IOException {
         try {
             if (Pattern.matches("^[a-zA-Z\\s]+", txtUser.getText())) {
                 Client client = new Client(txtUser.getText());
@@ -52,7 +50,9 @@ public class LoginController implements Initializable {
     private void clearFields(){
         txtUser.setText("");
     }
-    public void btnSignupOnAction(ActionEvent actionEvent) throws IOException {
-        root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/register.fxml")));
+
+    public void btnBackOnAction(MouseEvent mouseEvent) throws IOException {
+        root.getChildren().clear();
+        root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/welcomePage.fxml")));
     }
 }

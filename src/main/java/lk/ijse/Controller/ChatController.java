@@ -7,8 +7,13 @@ package lk.ijse.Controller;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,11 +33,11 @@ import java.util.ResourceBundle;
 
 public class ChatController implements Initializable {
     @FXML
-    private AnchorPane rootNode;
+    private AnchorPane root;
+    @FXML
+    private GridPane emojiGrid;
     @FXML
     private AnchorPane emojiPane;
-    @FXML
-    private Label lblName;
     @FXML
     private VBox msgVbox;
     @FXML
@@ -53,14 +58,7 @@ public class ChatController implements Initializable {
             "\uD83D\uDE09", // 😉
             "\uD83D\uDE0A", // 😊
             "\uD83D\uDE0B", // 😋
-            "\uD83D\uDE0C", // 😌
-            "\uD83D\uDE0D", // 😍
-            "\uD83D\uDE0E", // 😎
-            "\uD83D\uDE0F", // 😏
-            "\uD83D\uDE10", // 😐
-            "\uD83D\uDE11", // 😑
-            "\uD83D\uDE12", // 😒
-            "\uD83D\uDE13"  // 😓
+
     };
 
     @Override
@@ -72,7 +70,7 @@ public class ChatController implements Initializable {
                 if (buttonIndex < emoji.length) {
                     String emojies = emoji[buttonIndex];
                     JFXButton emojiButton = createEmojiButton(emojies);
-                   // emojiGridpane.add(emojiButton, column, row);
+                    emojiGrid.add(emojiButton, column, row);
                     buttonIndex++;
                 } else {
                     break;
@@ -84,7 +82,7 @@ public class ChatController implements Initializable {
     private JFXButton createEmojiButton(String emoji) {
         JFXButton button = new JFXButton(emoji);
         button.getStyleClass().add("emoji-button");
-        //button.setOnAction(this::emojiButtonAction);
+        button.setOnAction(this::emoji_on_action);
         button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         GridPane.setFillWidth(button, true);
         GridPane.setFillHeight(button, true);
@@ -92,9 +90,11 @@ public class ChatController implements Initializable {
         return button;
     }
 
+
+
     @FXML
-    public void emoji_on_action(MouseEvent mouseEvent) {
-       emojiPane.setVisible(true);
+    public void emoji_on_action(ActionEvent actionEvent) {
+        emojiPane.setVisible(!emojiPane.isVisible());
     }
 
     @FXML
@@ -115,9 +115,9 @@ public class ChatController implements Initializable {
 
     private void appendText(String text) {
         HBox hBox = new HBox();
-        hBox.setStyle("-fx-alignment: center-right;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 46;-fx-max-width: 728;-fx-padding: 10");
+        hBox.setStyle("-fx-alignment: center-right;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 330;-fx-max-width: 490;-fx-padding: 10");
         Label messageLbl = new Label(text);
-        messageLbl.setStyle("-fx-background-color:  #A52A2A;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
+        messageLbl.setStyle("-fx-background-color:  #48b9ff;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
         hBox.getChildren().add(messageLbl);
         msgVbox.getChildren().add(hBox);
         new Thread(() -> {
@@ -131,9 +131,9 @@ public class ChatController implements Initializable {
 
     public void writeMessage(String message) {
         HBox hBox = new HBox();
-        hBox.setStyle("-fx-alignment: center-left;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 520;-fx-max-width: 520;-fx-padding: 10");
+        hBox.setStyle("-fx-alignment: center-left;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 330;-fx-max-width: 490;-fx-padding: 10");
         Label messageLbl = new Label(message);
-        messageLbl.setStyle("-fx-background-color:   #696969;-fx-background-radius:15;-fx-font-size: 16;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
+        messageLbl.setStyle("-fx-background-color:   #076d19;-fx-background-radius:15;-fx-font-size: 16;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
         hBox.getChildren().add(messageLbl);
         Platform.runLater(() -> msgVbox.getChildren().add(hBox));
 
@@ -186,43 +186,4 @@ public class ChatController implements Initializable {
         });
     }
 
-    public void hide_emoji_pane(MouseEvent mouseEvent) {
-        emojiPane.setVisible(false);
-    }
-
-    public void emoji1(MouseEvent mouseEvent) {
-    }
-
-    public void emoji2(MouseEvent mouseEvent) {
-    }
-
-    public void emoji3(MouseEvent mouseEvent) {
-    }
-
-    public void emoji4(MouseEvent mouseEvent) {
-    }
-
-    public void emoji5(MouseEvent mouseEvent) {
-    }
-
-    public void emoji6(MouseEvent mouseEvent) {
-    }
-
-    public void emoji7(MouseEvent mouseEvent) {
-    }
-
-    public void emoji8(MouseEvent mouseEvent) {
-    }
-
-    public void emoji9(MouseEvent mouseEvent) {
-    }
-
-    public void emoji10(MouseEvent mouseEvent) {
-    }
-
-    public void emoji11(MouseEvent mouseEvent) {
-    }
-
-    public void emoji12(MouseEvent mouseEvent) {
-    }
 }
