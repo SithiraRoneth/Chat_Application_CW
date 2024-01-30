@@ -33,6 +33,8 @@ import java.util.ResourceBundle;
 
 public class ChatController implements Initializable {
     @FXML
+    private Label lblName;
+    @FXML
     private AnchorPane root;
     @FXML
     private GridPane emojiGrid;
