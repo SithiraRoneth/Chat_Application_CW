@@ -9,7 +9,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class Launcher extends Application {
     public static void main(String[] args) {
@@ -17,10 +16,9 @@ public class Launcher extends Application {
     }
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/login.fxml"))));
-        stage.setTitle("Login");
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/welcomePage.fxml"))));
+        stage.setTitle("welcome page");
         stage.centerOnScreen();
-        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 }

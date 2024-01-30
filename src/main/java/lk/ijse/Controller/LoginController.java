@@ -9,18 +9,23 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.Client.Client;
 import lk.ijse.DTO.UserDto;
 import lk.ijse.Model.UserModel;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
-public class LoginController {
+public class LoginController implements Initializable {
     @FXML
     private Label lbl_Pw;
     @FXML
@@ -29,45 +34,29 @@ public class LoginController {
     private JFXTextField txtPw;
     @FXML
     private JFXTextField txtUser;
-    static String user;
-    UserModel userModel = new UserModel();
 
-    public void initialize(){
-        root.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                try {
-                    btnLoginOnAction(new ActionEvent());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
-
     public void btnLoginOnAction(ActionEvent actionEvent) throws SQLException, IOException {
-        user = txtUser.getText();
-        String pw = txtPw.getText();
+        try {
+            if (Pattern.matches("^[a-zA-Z\\s]+", txtUser.getText())) {
+                Client client = new Client(txtUser.getText());
 
-        var dto = new UserDto(user,pw);
-        if (userModel.loginUser(dto)) {
-            Stage stage = new Stage();
-            stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/chatRoom.fxml"))));
-            stage.centerOnScreen();
-            stage.setTitle(user+" Room");
-            stage.show();
-        }else {
-            lbl_Pw.setText("Invalid Username or Password \uD83D\uDEC8");
+                Thread thread = new Thread(client);
+                thread.start();
+
+            }
+            clearFields();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        clearFields();
-    }
 
-    private void clearFields() {
+    }
+    private void clearFields(){
         txtUser.setText("");
-        txtPw.setText("");
     }
-
     public void btnSignupOnAction(ActionEvent actionEvent) throws IOException {
         root.getChildren().add(FXMLLoader.load(getClass().getResource("/view/register.fxml")));
     }

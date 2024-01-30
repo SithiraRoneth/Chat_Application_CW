@@ -5,21 +5,28 @@
  * */
 package lk.ijse.Controller;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import java.io.*;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import lk.ijse.Client.Client;
 
-public class ChatController extends Thread{
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
+import java.util.ResourceBundle;
+
+public class ChatController implements Initializable {
     @FXML
     private AnchorPane rootNode;
     @FXML
@@ -32,69 +39,61 @@ public class ChatController extends Thread{
     private ScrollPane scrollPane;
     @FXML
     private TextField txtMsg;
-    FileChooser fileChooser;
-    Socket socket;
-    BufferedReader bufferedReader;
-    PrintWriter printWriter;
-    File filepath;
-    String name = LoginController.user;
+    private Client client;
 
-    public void initialize(){
-
-        lblName.setText(name);
-
-        try {
-            socket = new Socket("localhost",3000);
-            System.out.println("Socket connected to server");
-            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            printWriter = new PrintWriter(socket.getOutputStream(),true);
-
-            this.start();
-
-            emojiPane.setVisible(false);
-
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @FXML
-    void hide_emoji_pane(MouseEvent event) {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         emojiPane.setVisible(false);
     }
+
+    /*private JFXButton createEmojiButton(String emoji) {
+        JFXButton button = new JFXButton(emoji);
+        button.getStyleClass().add("emoji-button");
+        //button.setOnAction(this::emojiButtonAction);
+        button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        GridPane.setFillWidth(button, true);
+        GridPane.setFillHeight(button, true);
+        button.setStyle("-fx-font-size: 15; -fx-text-fill: black; -fx-background-color: #F0F0F0; -fx-border-radius: 50");
+        return button;
+    }*/
+
     @FXML
-    void emoji_on_action(MouseEvent event) {
-        emojiPane.setVisible(true);
+    public void emoji_on_action(MouseEvent mouseEvent) {
+       emojiPane.setVisible(true);
     }
 
     @FXML
-    void image_on_action(MouseEvent event) {
-        Stage stage =(Stage) ((Node) event.getSource()).getScene().getWindow();
-        fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose Image");
-        this.filepath = fileChooser.showOpenDialog(stage);
-        printWriter.println(this.filepath.getPath());
-    }
-
-    @FXML
-    void send_on_action(MouseEvent event) {
-       sendMessage();
-    }
-
-    private void sendMessage() {
-        String msg = txtMsg.getText();
-        if (msg != null){
-            if(msg.equalsIgnoreCase("bye") || (msg.equalsIgnoreCase("exit"))) {
-                System.exit(0);
+    public void send_on_action(MouseEvent mouseEvent) {
+        try {
+            String txt = txtMsg.getText();
+            if (txt != null) {
+                appendText(txt);
+                client.sendMessage(txt);
+                txtMsg.clear();
+            } else {
+                new Alert(Alert.AlertType.INFORMATION, "message is empty").show();
             }
-            appendText(msg);
-            txtMsg.setText(null);
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.ERROR, "Something went wrong : server down").show();
         }
-
     }
+
+    private void appendText(String text) {
+        HBox hBox = new HBox();
+        hBox.setStyle("-fx-alignment: center-right;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 46;-fx-max-width: 728;-fx-padding: 10");
+        Label messageLbl = new Label(text);
+        messageLbl.setStyle("-fx-background-color:  #A52A2A;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
+        hBox.getChildren().add(messageLbl);
+        msgVbox.getChildren().add(hBox);
+        new Thread(() -> {
+            //playSound("media/messageSend.mp3");
+        }).start();
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
     public void writeMessage(String message) {
         HBox hBox = new HBox();
         hBox.setStyle("-fx-alignment: center-left;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 520;-fx-max-width: 520;-fx-padding: 10");
@@ -105,72 +104,90 @@ public class ChatController extends Thread{
 
     }
 
-    private void appendText(String msg) {
+    public void image_on_action(MouseEvent mouseEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image File");
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", ".png", ".jpg", "*.jpeg");
+        fileChooser.getExtensionFilters().add(imageFilter);
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if (selectedFile != null) {
+            try {
+                byte[] bytes = Files.readAllBytes(selectedFile.toPath());
+                HBox hBox = new HBox();
+                hBox.setStyle("-fx-fill-height: true; -fx-min-height: 50; -fx-pref-width: 46; -fx-max-width: 728; -fx-padding: 10; -fx-alignment: center-right;");
+
+                // Display the image in an ImageView or any other UI component
+                ImageView imageView = new ImageView(new Image(new FileInputStream(selectedFile)));
+                imageView.setStyle("-fx-padding: 10px;");
+                imageView.setFitHeight(180);
+                imageView.setFitWidth(100);
+
+                hBox.getChildren().addAll(imageView);
+                msgVbox.getChildren().add(hBox);
+
+                client.sendImage(bytes);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void setImage(byte[] bytes, String sender) {
         HBox hBox = new HBox();
-        hBox.setStyle("-fx-alignment: center-right; -fx-fill-height: true; -fx-min-height: 50; -fx-pref-width: 46; -fx-max-width: 728; -fx-padding: 10");
+        Label messageLbl = new Label(sender);
+        messageLbl.setStyle("-fx-background-color:   #2980b9;-fx-background-radius:15;-fx-font-size: 18;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
 
-        Label messageLbl = new Label(msg);
-        messageLbl.setStyle("-fx-background-color: #A52A2A; -fx-background-radius: 15; -fx-font-size: 16; -fx-font-weight: normal; -fx-text-fill: white; -fx-wrap-text: true; -fx-alignment: center-left; -fx-content-display: left; -fx-padding: 10; -fx-max-width: 350;");
+        hBox.setStyle("-fx-fill-height: true; -fx-min-height: 50; -fx-pref-width: 520; -fx-max-width: 520; -fx-padding: 10; " + (sender.equals(client.getName()) ? "-fx-alignment: center-right;" : "-fx-alignment: center-left;"));
+        // Display the image in an ImageView or any other UI component
+        Platform.runLater(() -> {
+            ImageView imageView = new ImageView(new Image(new ByteArrayInputStream(bytes)));
+            imageView.setStyle("-fx-padding: 10px;");
+            imageView.setFitHeight(180);
+            imageView.setFitWidth(100);
 
-        hBox.getChildren().add(messageLbl);
-        msgVbox.getChildren().add(hBox);
+            hBox.getChildren().addAll(messageLbl, imageView);
+            msgVbox.getChildren().add(hBox);
 
+        });
     }
 
-
-    @FXML
-    void emoji1(MouseEvent mouseEvent) {
-    }
-    @FXML
-    void emoji10(MouseEvent event) {
-    }
-    @FXML
-    void emoji11(MouseEvent event) {
-
+    public void hide_emoji_pane(MouseEvent mouseEvent) {
+        emojiPane.setVisible(false);
     }
 
-    @FXML
-    void emoji12(MouseEvent event) {
-
+    public void emoji1(MouseEvent mouseEvent) {
     }
 
-    @FXML
-    void emoji2(MouseEvent event) {
-
+    public void emoji2(MouseEvent mouseEvent) {
     }
 
-    @FXML
-    void emoji3(MouseEvent event) {
-
+    public void emoji3(MouseEvent mouseEvent) {
     }
 
-    @FXML
-    void emoji4(MouseEvent event) {
-
+    public void emoji4(MouseEvent mouseEvent) {
     }
 
-    @FXML
-    void emoji5(MouseEvent event) {
-
+    public void emoji5(MouseEvent mouseEvent) {
     }
 
-    @FXML
-    void emoji6(MouseEvent event) {
-
+    public void emoji6(MouseEvent mouseEvent) {
     }
 
-    @FXML
-    void emoji7(MouseEvent event) {
-
+    public void emoji7(MouseEvent mouseEvent) {
     }
 
-    @FXML
-    void emoji8(MouseEvent event) {
-
+    public void emoji8(MouseEvent mouseEvent) {
     }
 
-    @FXML
-    void emoji9(MouseEvent event) {
+    public void emoji9(MouseEvent mouseEvent) {
+    }
 
+    public void emoji10(MouseEvent mouseEvent) {
+    }
+
+    public void emoji11(MouseEvent mouseEvent) {
+    }
+
+    public void emoji12(MouseEvent mouseEvent) {
     }
 }
