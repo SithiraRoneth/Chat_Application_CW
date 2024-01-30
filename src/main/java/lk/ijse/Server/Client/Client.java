@@ -3,7 +3,7 @@
  * Time :13:05
  * Project Name :Chat_Application
  * */
-package lk.ijse.Client;
+package lk.ijse.Server.Client;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -19,7 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import lk.ijse.Client.Client;
+import lk.ijse.Server.Client.Client;
 
 import java.io.*;
 import java.net.URL;
@@ -40,13 +40,48 @@ public class ChatController implements Initializable {
     @FXML
     private TextField txtMsg;
     private Client client;
+    private String[] emoji = {
+            "\uD83D\uDE00", // 😀
+            "\uD83D\uDE01", // 😁
+            "\uD83D\uDE02", // 😂
+            "\uD83D\uDE03", // 🤣
+            "\uD83D\uDE04", // 😄
+            "\uD83D\uDE05", // 😅
+            "\uD83D\uDE06", // 😆
+            "\uD83D\uDE07", // 😇
+            "\uD83D\uDE08", // 😈
+            "\uD83D\uDE09", // 😉
+            "\uD83D\uDE0A", // 😊
+            "\uD83D\uDE0B", // 😋
+            "\uD83D\uDE0C", // 😌
+            "\uD83D\uDE0D", // 😍
+            "\uD83D\uDE0E", // 😎
+            "\uD83D\uDE0F", // 😏
+            "\uD83D\uDE10", // 😐
+            "\uD83D\uDE11", // 😑
+            "\uD83D\uDE12", // 😒
+            "\uD83D\uDE13"  // 😓
+    };
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         emojiPane.setVisible(false);
+        int buttonIndex = 0;
+        for (int row = 0; row < 4; row++) {
+            for (int column = 0; column < 4; column++) {
+                if (buttonIndex < emoji.length) {
+                    String emojies = emoji[buttonIndex];
+                    JFXButton emojiButton = createEmojiButton(emojies);
+                   // emojiGridpane.add(emojiButton, column, row);
+                    buttonIndex++;
+                } else {
+                    break;
+                }
+            }
+        }
     }
 
-    /*private JFXButton createEmojiButton(String emoji) {
+    private JFXButton createEmojiButton(String emoji) {
         JFXButton button = new JFXButton(emoji);
         button.getStyleClass().add("emoji-button");
         //button.setOnAction(this::emojiButtonAction);
@@ -55,7 +90,7 @@ public class ChatController implements Initializable {
         GridPane.setFillHeight(button, true);
         button.setStyle("-fx-font-size: 15; -fx-text-fill: black; -fx-background-color: #F0F0F0; -fx-border-radius: 50");
         return button;
-    }*/
+    }
 
     @FXML
     public void emoji_on_action(MouseEvent mouseEvent) {
@@ -86,7 +121,7 @@ public class ChatController implements Initializable {
         hBox.getChildren().add(messageLbl);
         msgVbox.getChildren().add(hBox);
         new Thread(() -> {
-            //playSound("media/messageSend.mp3");
+
         }).start();
     }
 

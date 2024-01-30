@@ -10,15 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import lk.ijse.Client.Client;
-import lk.ijse.DTO.UserDto;
-import lk.ijse.Model.UserModel;
+import lk.ijse.Server.Client.Client;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
