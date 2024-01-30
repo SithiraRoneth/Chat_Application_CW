@@ -5,18 +5,8 @@
  * */
 package lk.ijse;
 
-import lk.ijse.Server.Server;
-
 public class LauncherWrapper {
     public static void main(String[] args) {
-       /* Thread serverThread = new Thread(() -> {
-            try {
-                Server.main(new String[]{});
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        serverThread.start();*/
         Launcher.main(args);
     }
 }
