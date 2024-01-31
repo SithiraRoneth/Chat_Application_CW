@@ -5,17 +5,14 @@
  * */
 package lk.ijse.Controller;
 
-import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.Server.Client.Client;
-
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -28,7 +25,7 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
-    public void btnSigninOnAction(ActionEvent actionEvent) throws SQLException, IOException {
+    public void btnSign_inOnAction(ActionEvent actionEvent){
         try {
             if (Pattern.matches("^[a-zA-Z\\s]+", txtUser.getText())) {
                 Client client = new Client(txtUser.getText());

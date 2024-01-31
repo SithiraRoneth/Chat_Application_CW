@@ -76,7 +76,6 @@ public class ChatController implements Initializable {
             }
         }
     }
-
     private JFXButton createEmojiButton(String emoji) {
         JFXButton button = new JFXButton(emoji);
         button.getStyleClass().add("emoji-button");
@@ -87,8 +86,6 @@ public class ChatController implements Initializable {
         button.setStyle("-fx-font-size: 15; -fx-text-fill: black; -fx-background-color: #F0F0F0; -fx-border-radius: 50");
         return button;
     }
-
-
 
     @FXML
     public void emoji_on_action(ActionEvent actionEvent) {
@@ -110,7 +107,6 @@ public class ChatController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Something went wrong : server down").show();
         }
     }
-
     private void appendText(String text) {
         HBox hBox = new HBox();
         hBox.setStyle("-fx-alignment: center-right;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 330;-fx-max-width: 490;-fx-padding: 10");
@@ -122,7 +118,6 @@ public class ChatController implements Initializable {
 
         }).start();
     }
-
     public void setClient(Client client) {
         this.client = client;
     }
@@ -136,7 +131,6 @@ public class ChatController implements Initializable {
         Platform.runLater(() -> msgVbox.getChildren().add(hBox));
 
     }
-
     public void image_on_action(MouseEvent mouseEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Image File");
@@ -164,7 +158,6 @@ public class ChatController implements Initializable {
             }
         }
     }
-
     public void setImage(byte[] bytes, String sender) {
         HBox hBox = new HBox();
         Label messageLbl = new Label(sender);
@@ -183,5 +176,4 @@ public class ChatController implements Initializable {
 
         });
     }
-
 }
