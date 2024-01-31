@@ -20,7 +20,7 @@ public class LoginController implements Initializable {
     @FXML
     private AnchorPane root;
     @FXML
-    private TextField txtUser;
+    private  TextField txtUser;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -29,7 +29,6 @@ public class LoginController implements Initializable {
         try {
             if (Pattern.matches("^[a-zA-Z\\s]+", txtUser.getText())) {
                 Client client = new Client(txtUser.getText());
-
                 Thread thread = new Thread(client);
                 thread.start();
 

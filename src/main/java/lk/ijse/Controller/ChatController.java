@@ -61,6 +61,7 @@ public class ChatController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         emojiPane.setVisible(false);
         int buttonIndex = 0;
         for (int row = 0; row < 4; row++) {

@@ -28,6 +28,7 @@ public class WelcomeController {
             root.getChildren().clear();
             Stage stage = (Stage) root.getScene().getWindow();
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/login.fxml"))));
+            stage.setTitle("login page");
             stage.show();
             stage.setOnCloseRequest(e-> {
                 System.exit(0);
@@ -35,15 +36,5 @@ public class WelcomeController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public void btnSignupOnAction(ActionEvent actionEvent) throws IOException {
-        root.getChildren().clear();
-        Stage stage = (Stage) root.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/register.fxml"))));
-        stage.setTitle("Sign Up Form");
-        stage.show();
-
     }
 }
